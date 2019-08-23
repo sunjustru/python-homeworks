@@ -3,7 +3,11 @@
 
 equation = 'y = -12x + 11111140.2121'
 x = 2.5
-# вычислите и выведите y
+# Можно и так — equation.split();
+
+y = int(equation[equation[:].find('=')+1:equation[:].find('x')])*x + float(equation[equation[:].find('+')+2:])
+
+#Ответ 11111110.2121
 
 
 # Задание-2: Дата задана в виде строки формата 'dd.mm.yyyy'.
@@ -17,12 +21,46 @@ x = 2.5
 #  (т.е. 2 символа для дня, 2 - для месяца, 4 - для года)
 
 # Пример корректной даты
-date = '01.11.1985'
+date = '12.11.1985'
+date_list = date.split(".")
+
+# [0]/[1]ограничение от и до
+# [2] кол-во символов
+date_dict = {
+    'day': [1, 30, 2],
+    'month': [1, 12, 2],
+    'year': [1, 9999, 4]
+}
+
+wrong_date = False
+
+for key, itm in enumerate(date_dict):
+
+    param = int(date_list[key])
+    limit_start = date_dict[itm][0]
+    limit_end   = date_dict[itm][1]
+    limit_end_len = date_dict[itm][2]
+
+    if param >= limit_start and param <= limit_end and limit_end_len == len(date_list[key]):
+        continue
+    else:
+        #print('Не верный  :', itm, param,date_dict[itm][0],date_dict[itm][1])
+        wrong_date = True
+        break
+
+if wrong_date is False:
+    print("Дата верна! ", date)
+else:
+    print("Ошибка даты!")
 
 # Примеры некорректных дат
 date = '01.22.1001'
 date = '1.12.1001'
 date = '-2.10.3001'
+
+
+
+
 
 
 # Задание-3: "Перевёрнутая башня" (Задача олимпиадного уровня)
@@ -54,3 +92,29 @@ date = '-2.10.3001'
 #
 # Вход: 11
 # Выход: 5 3
+
+# создание списка
+room_find = int(input("Укажите номер комнаты: "))
+room = 1
+floor= 1
+
+res_floor = 0
+res_room  = 0
+
+while(room_find > 0):
+    for cur_floor in range(floor):
+        res_floor += 1
+
+        for cur_room in range(room):
+            room_find -=1
+
+            if room_find == 0:
+                res_room = cur_room + 1
+                break
+        if room_find == 0:
+            break
+
+    room += 1
+    floor +=1
+
+print(res_floor, res_room)
